@@ -77,9 +77,24 @@ class Shape {
 
 export class ObjectShape extends Shape {
   _create (context) {
-    return this._clean
-      ? Object.create(null)
-      : simpleClone(context.input)
+    const input = context.input
+    Object.keys(this._shape).forEach((key)=>{
+      const shape = this._shape[key]
+
+      //maomaomao 2018-10-29 可选 object
+      if(shape._type  && shape._type._shape instanceof ObjectShape && shape._optional){
+        if(!input[key]){
+          delete context.input[key]
+        }
+      }
+      //maomaomao 2018-10-29 当传入元素不为数组是强制转换成空数组
+      if(shape._shape  && shape._shape instanceof ArrayOfShape){
+        if(!input[key]){
+          context.input[key] = []
+        }
+      }
+    })
+    return this._clean ? Object.create(null) : simpleClone(context.input);
   }
 
   _tasks (context) {

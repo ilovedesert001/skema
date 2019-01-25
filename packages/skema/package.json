@@ -1,6 +1,6 @@
 {
-  "name": "skema",
-  "version": "9.3.7",
+  "name": "custom-skema-test",
+  "version": "10.0.1",
   "description": "Skema provides a handy & composable way to validate / transform / purify the input data.",
   "main": "lib/index.js",
   "module": "src/index.js",
@@ -10,9 +10,11 @@
     "umd"
   ],
   "scripts": {
+    "build:cjsone": "BABEL_ENV=cjs ../../node_modules/.bin/babel src --out-file one/skema.js",
     "build:cjs": "BABEL_ENV=cjs ../../node_modules/.bin/babel src --out-dir lib",
     "build:umd": "../../node_modules/.bin/browserify -s Skema lib/index.js -o umd/skema.es2015.js",
     "build:es5": "BABEL_ENV=es5 ../../node_modules/.bin/babel umd/skema.es2015.js -o umd/skema.es5.js",
+    "build:es5_2": "BABEL_ENV=es5 ../../node_modules/.bin/babel one/skema.js -o es5/skema.js",
     "build:min": "../../node_modules/.bin/uglifyjs umd/skema.es5.js -o umd/skema.min.js --compress",
     "build:jf": "BABEL_ENV=es5 ../../node_modules/.bin/babel tool/jsfiddle.js -o umd/jsfiddle.js",
     "build": "npm run build:cjs && npm run build:umd && npm run build:es5 && npm run build:min && npm run build:jf",
